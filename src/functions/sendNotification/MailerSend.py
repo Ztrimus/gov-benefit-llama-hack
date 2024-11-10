@@ -63,3 +63,6 @@ def send_email(to_email: str, to_name: str, subject: str, html_content: str, tex
         # Log any exceptions and return an error message
         log.error("send_email function failed", extra={"error": str(e), "to_email": to_email, "subject": subject})
         return f"Error occurred while sending email: {e}"
+
+send_email("kshah57@asu.edu", "Keval", "testemail", "hi", "hi", "keval.arhan@gmail.com", "test")
+

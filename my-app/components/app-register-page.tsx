@@ -1,3 +1,4 @@
+// my-app/components/SignInPage.tsx
 'use client'
 
 import Image from 'next/image'
