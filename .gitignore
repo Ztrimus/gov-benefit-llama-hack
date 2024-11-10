@@ -5,3 +5,4 @@ venv
 .env*
 .vscode
 poetry.lock
+node_modules
