@@ -1,5 +1,8 @@
 from datetime import timedelta
+from typing import List
 from restack_ai.workflow import workflow, import_functions, log
+
+from src.functions.crawl.web import web_crawler
 
 with import_functions():
     from src.functions.hn.search import hn_search
@@ -61,7 +64,7 @@ class hn_workflow:
 @workflow.defn(name="crawl_website_and_store")
 class crawl_website_and_store:
     @workflow.run
-    async def run(self, url: str):
+    async def run(self, urls: List[str]):
         return await workflow.step(
-            crawl_website, url, start_to_close_timeout=timedelta(seconds=30)
+            web_crawler, urls, start_to_close_timeout=timedelta(seconds=30)
         )
