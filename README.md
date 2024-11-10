@@ -1,96 +1,138 @@
-# Quickstart Llama Hackathon
+# Benefit Notification Tool
 
-[Everything you need for the Llama Impact Hackathon](https://docs.restack.io/community/hackathons/08-11-2024-llama-impact)
+### Team Members:
 
-Restack AI - Streamlit + FastApi + TogetherAI with LlamaIndex Example
+Saurabh Zinjad, Shikha Verma, and Keval Shah
 
-The AI workflow will search hacker news based on a query, crawl each project's website, and make summaries for the user.
+---
 
-## Prerequisites
+## Table of Contents
 
-- Python 3.12 or higher
-- Poetry (for dependency management)
-- Docker (for running the Restack services)
-- Active [Together AI](https://together.ai) account with API key
+1. [Project Overview](#project-overview)
+2. [Motivation](#motivation)
+3. [Challenges in Benefit Access](#challenges-in-benefit-access)
+4. [Solution Overview](#solution-overview)
+5. [Architecture](#architecture)
+6. [Features](#features)
+7. [Technology Stack](#technology-stack)
+8. [User Personas](#user-personas)
+9. [Prototype and Demo](#prototype-and-demo)
+10. [Future Work](#future-work)
+11. [Acknowledgments](#acknowledgments)
 
-## YouTube walkthrough
+---
 
-[![Hackathon Walkthrough](https://img.youtube.com/vi/EgiYVXmnalU/0.jpg)](https://www.youtube.com/watch?v=EgiYVXmnalU)
+## Project Overview
 
-## Usage
+The **Benefit Notification Tool** is an accessible platform designed to assist underprivileged individuals in locating government benefits tailored to their unique profiles. By continuously monitoring government websites, the tool provides timely notifications and relevant benefit information via email, reducing the manual search burden on users.
 
-1. Run Restack local engine with Docker:
+---
 
-   ```bash
-   docker run -d --pull always --name studio -p 5233:5233 -p 6233:6233 -p 7233:7233 ghcr.io/restackio/engine:main
-   ```
+## Motivation
 
-2. Open the Web UI to see the workflows:
+Many individuals face significant hurdles in accessing public benefits due to:
 
-   ```bash
-   http://localhost:5233
-   ```
+-   Complex application processes that are lengthy and challenging to navigate
+-   Lack of awareness about available support options
+-   Language and digital literacy barriers, which hinder access for non-native speakers and individuals unfamiliar with digital tools
 
-3. Clone this repository:
+Our goal is to bridge these gaps by creating a simple, accessible platform that proactively notifies users of applicable benefits.
 
-   ```bash
-   git clone https://github.com/restackio/examples-python
-   cd examples-python/examples/llama_quickstart
-   ```
+---
 
-4. Install dependencies using Poetry:
+## Challenges in Benefit Access
 
-   ```bash
-   poetry install
-   ```
+The primary obstacles users face include:
 
-5. Set up your environment variables:
+1. **Complex Application Processes**
+2. **Lack of Awareness**
+3. **Language and Digital Literacy Barriers**
+4. **Documentation Requirements**
+5. **Frequent Eligibility Changes**
 
-   Copy `.env.example` to `.env` and add your Together AI API key:
+---
 
-   ```bash
-   cp .env.example .env
-   # Edit .env and add your TOGETHER_API_KEY
-   ```
+## Solution Overview
 
-6. Open poetry shell:
+### Key Features
 
-   ```bash
-   poetry shell
-   ```
+-   **Automated Web Crawling**: Monitors government websites for updates on benefit information.
+-   **Personalized Notifications**: Tailored emails inform users about benefits suited to their profiles.
+-   **Language-Agnostic Design**: The platform supports multiple languages to enhance accessibility.
+-   **Real-Time Updates**: Ensures users receive the latest information on available benefits.
+-   **Simplified Access**: Guides users directly to relevant benefits without requiring manual searches.
 
-It will display an interpreter path like
-...caches/pypoetry/virtualenvs/get-started-ORuVhULK-py3.12
+---
 
-When you open a python file in VSCode or other IDEs like Cursor, you can select the interpreter path to use the poetry environment.
+## Architecture
 
-7. Run the services:
+The Benefit Notification Tool operates through a series of integrated components:
 
-   ```bash
-   poetry run services
-   ```
+1. **Web Crawler**: Built with `SimpleWebPageReader`, the crawler gathers updated information from government websites, saving data in a vector database for quick retrieval.
+2. **Vector Database**: Uses Pinecone to store and query collected data, allowing for fast matching and retrieval of benefits.
+3. **Personalized Notification System**: Leverages user profile data to send customized notifications on relevant benefits.
+4. **Safety and Fairness**: Incorporates Llama Guard to minimize biases and ensure information integrity.
+5. **Authentication**: Uses Google OAuth 2.0 for secure access and data protection.
 
-   This will start the Restack service with the defined workflows and functions.
+---
 
-8. In a new terminal, run FastAPI app:
+## Features
 
-   ```bash
-   poetry run app
-   ```
+1. **Automated Information Gathering**: Automatically crawls and updates government benefit data daily, maintaining an up-to-date database.
+2. **Multilingual Support**: Enhances accessibility by supporting multiple languages, addressing language barriers.
+3. **Real-Time Notifications**: Delivers prompt updates on benefit eligibility and availability to users.
+4. **User-Friendly Design**: Prioritizes accessibility with a streamlined, easy-to-navigate interface.
+5. **Privacy and Security**: Secured with Google OAuth 2.0 and other protective measures to ensure user data safety.
 
-9. In a new terminal, run the Streamlit frontend
+---
 
-   ```bash
-   poetry run streamlit run frontend.py
-   ```
+## Technology Stack
 
-10. You can test the API endpoint without the Streamlit UI with:
+-   **Frontend**: React (with environment variable `REACT_APP_API_BASE_URL` for API requests)
+-   **Backend**: FastAPI, REST API
+-   **Data Storage**: Pinecone (Vector Database)
+-   **Authentication**: Google OAuth 2.0
+-   **Additional Tools**: Llama Guard for bias prevention
 
-```bash
-curl -X POST \
-  http://localhost:8000/api/schedule \
-  -H "Content-Type: application/json" \
-  -d '{"query": "AI", "count": 5}'
-```
+---
 
-This will schedule the workflow and return the result.
+## User Personas
+
+The primary users and beneficiaries include:
+
+1. Low-income individuals and families
+2. Elderly citizens
+3. People with disabilities
+4. Veterans
+5. Students
+6. Unemployed individuals
+7. Single parents
+
+---
+
+## Prototype and Demo
+
+Our current prototype features:
+
+-   **Functionality**: Data is gathered from government websites, stored, and matched to users' profiles to send notifications about relevant benefits.
+-   **Demo**: [Link to Demo or Video](#) _(Link to be updated based on hackathon submission platform)_
+
+---
+
+## Future Work
+
+We aim to expand the tool's capabilities, including:
+
+1. **Language Support Expansion**: Adding support for more popular languages in the U.S.
+2. **Subscription Model**: Allowing new websites to join and share benefits information on our platform.
+3. **Application Process Integration**: Assisting users through benefit application processes directly from our platform.
+
+---
+
+## Acknowledgments
+
+Special thanks to **Philippe** for mentorship and guidance on prioritizing accessibility and direct user outreach, which helped refine the solution to be both simple and proactive.
+
+---
+
+This structure covers your project from the initial concept to the technical architecture and future work, making it easy for others to understand and navigate. Feel free to adapt each section to add specific details or links as needed.

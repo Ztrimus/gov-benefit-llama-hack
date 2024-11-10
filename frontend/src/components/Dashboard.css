@@ -1,0 +1,222 @@
+/* Dashboard container */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  background: #f0f2f5;
+  font-family: 'Arial', sans-serif;
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+/* Horizontal row layout for summary, chart, and tips */
+.dashboard-row {
+  display: flex;
+  gap: 20px;
+  width: 100%;
+  justify-content: space-around;
+  margin-bottom: 40px;
+  flex-wrap: wrap;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Summary cards */
+.summary-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.summary-card {
+  background: #ffffff;
+  border-radius: 15px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  min-width: 150px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.summary-card:hover {
+  transform: translateY(-5px) scale(1.03);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.summary-card h2 {
+  font-size: 2em;
+  color: #4CAF50;
+  margin: 0;
+}
+
+.summary-card p {
+  margin: 10px 0 0;
+  color: #666;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.summary-card p:hover {
+  color: #333;
+}
+
+/* Chart Card */
+.chart-card {
+  flex: 1;
+  background: #ffffff;
+  border-radius: 15px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  min-width: 250px;
+  max-width: 500px;
+  animation: fadeInUp 0.6s ease-in-out;
+}
+
+.chart-card h2 {
+  color: #333;
+  margin-bottom: 15px;
+}
+
+/* Tips Card */
+.tips-card {
+  flex: 1;
+  background: #e3f2fd;
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  min-width: 250px;
+  max-width: 500px;
+  animation: fadeInUp 0.8s ease-in-out;
+}
+
+.tips-card h2 {
+  color: #1565c0;
+  margin-bottom: 10px;
+}
+
+.tips-card ul {
+  list-style-type: disc;
+  padding-left: 20px;
+  color: #555;
+}
+
+/* Grants and Applied Grants Sections */
+.grants-container, .applied-grants-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  padding: 20px;
+}
+
+.grant-card, .applied-grant-card {
+  padding: 20px;
+  width: 320px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  animation: fadeInUp 0.9s ease-in-out;
+}
+
+.grant-card:hover, .applied-grant-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 16px 24px rgba(0, 0, 0, 0.15);
+}
+
+/* Status bar */
+.status-bar {
+  height: 12px;
+  width: 100%;
+  background-color: #ddd;
+  border-radius: 5px;
+  margin-top: 15px;
+  overflow: hidden;
+}
+
+.status-bar .progress {
+  height: 100%;
+  background-color: #4CAF50;
+  transition: width 0.3s ease;
+}
+
+/* Apply link */
+.apply-link {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 12px 24px;
+  background-color: #4CAF50;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 50px;
+  box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.apply-link:hover {
+  background-color: #45a049;
+  box-shadow: 0 6px 20px rgba(76, 175, 80, 0.6);
+  transform: scale(1.05);
+}
+
+/* Testimonials Section */
+.testimonials-section {
+  background: #f3e5f5;
+  border-radius: 15px;
+  padding: 25px;
+  width: 100%;
+  max-width: 600px;
+  margin-top: 40px;
+  text-align: center;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1s ease-in-out;
+}
+
+.testimonials-section h2 {
+  color: #6a1b9a;
+  margin-bottom: 15px;
+}
+
+.testimonials-section blockquote {
+  font-style: italic;
+  color: #555;
+  margin: 10px 0;
+  padding-left: 20px;
+  border-left: 3px solid #6a1b9a;
+  text-align: left;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes growIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
