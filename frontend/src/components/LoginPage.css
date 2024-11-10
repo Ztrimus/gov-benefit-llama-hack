@@ -42,7 +42,7 @@
     bottom: -6px;
     z-index: -1;
     border-radius: 30px;
-    background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
+    background: linear-gradient(135deg, #cfd9df, #e2ebf0, #d3d3d3, #a6b1c1);
     background-size: 300% 300%;
     animation: borderAnimation 6s ease infinite;
   }
