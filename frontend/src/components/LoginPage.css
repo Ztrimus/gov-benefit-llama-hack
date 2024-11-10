@@ -1,0 +1,84 @@
+/* LoginPage.css */
+
+@keyframes borderAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  .login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: #ffffff; /* Changed to white */
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .login-card {
+    backdrop-filter: blur(15px);
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 25px;
+    padding: 80px; /* Increase the padding to make the card vertically larger */
+    width: 450px;
+    text-align: center;
+    box-shadow: 0 10px 40px 0 rgba(31, 38, 135, 0.2);
+    border: 4px solid transparent;
+    position: relative;
+  }
+  
+  .login-card::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
+    z-index: -1;
+    border-radius: 30px;
+    background: linear-gradient(135deg, #ff9a9e, #fad0c4, #fbc2eb, #a18cd1);
+    background-size: 300% 300%;
+    animation: borderAnimation 6s ease infinite;
+  }
+  
+  .login-card h1 {
+    color: #444; /* Darker color for better contrast against white background */
+    margin-bottom: 30px;
+    font-size: 2em;
+  }
+  
+  button {
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2); /* Adjusted shadow for better contrast */
+  }
+  
+  /* Add more animation and color changes for a fun experience */
+  button:focus {
+    outline: none;
+    animation: pulse 1s infinite alternate;
+  }
+  
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+    100% {
+      transform: scale(1.05);
+    }
+  }
+  
