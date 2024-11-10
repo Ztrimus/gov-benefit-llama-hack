@@ -23,6 +23,12 @@ mindsdb-sdk = "^3.1.6"
 mailersend = "^0.5.8"
 httpx-oauth = "^0.15.1"
 pyjwt = "^2.9.0"
+playwright = "^1.48.0"
+llama-index-readers-web = "^0.2.4"
+pinecone = "^5.3.1"
+llama-index-core = "^0.11.22"
+llama-parse = "^0.5.13"
+llama-index-readers-file = "^0.2.2"
 
 [tool.poetry.group.dev.dependencies]
 ipykernel = "^6.29.5"
