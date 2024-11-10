@@ -21,6 +21,8 @@ streamlit = "^1.40.0"
 requests = "^2.32.3"
 mindsdb-sdk = "^3.1.6"
 mailersend = "^0.5.8"
+httpx-oauth = "^0.15.1"
+pyjwt = "^2.9.0"
 
 [build-system]
 requires = ["poetry-core"]
