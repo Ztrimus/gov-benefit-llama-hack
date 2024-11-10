@@ -19,6 +19,8 @@ uvicorn = "^0.32.0"
 python-dotenv = "0.19"
 streamlit = "^1.40.0"
 requests = "^2.32.3"
+httpx-oauth = "^0.15.1"
+pyjwt = "^2.9.0"
 
 [build-system]
 requires = ["poetry-core"]
