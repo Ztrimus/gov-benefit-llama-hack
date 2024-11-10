@@ -24,6 +24,9 @@ mailersend = "^0.5.8"
 httpx-oauth = "^0.15.1"
 pyjwt = "^2.9.0"
 
+[tool.poetry.group.dev.dependencies]
+ipykernel = "^6.29.5"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
