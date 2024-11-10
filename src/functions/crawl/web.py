@@ -30,7 +30,6 @@ file_extractor = {".pdf": parser}
 visited_urls = set()
 INDEX_NAME = "gov-benefits"
 API_KEY = os.getenv("PINECONE_API_KEY")
-MAX_VISITED_URL = 5
 MAX_DOCUMENTS = 96
 
 
@@ -67,11 +66,7 @@ def parse_pdf(url):
 
 
 def crawl(url, max_depth, current_depth=0):
-    if (
-        current_depth > max_depth
-        or url in visited_urls
-        or len(visited_urls) > MAX_VISITED_URL
-    ):
+    if current_depth > max_depth or url in visited_urls:
         return []
 
     print(f"Crawling: {url} at depth {current_depth}")
@@ -158,46 +153,20 @@ def get_matching_embedding(pc, query: str):
     results = index.query(
         namespace="ns1",
         vector=embedding[0].values,
-        top_k=3,
+        top_k=15,
         include_values=False,
         include_metadata=True,
     )
     return results
 
 
-def main():
+def web_crawler(start_urls):
     pc = initialize_pinecone_index()
-    start_urls = [
-        "https://benefits.va.gov/benefits/",
-        # "https://childcare.gov/",
-        # "https://studentaid.gov",
-        # "https://www.healthcare.gov",
-        # "https://home.treasury.gov/",
-        # "https://studentaid.gov/",
-        # "https://www.dhs.gov",
-        # "https://www.hhs.gov",
-        # "https://22007apply.gov/",
-        # "https://www.usa.gov",
-        # "https://www.grants.gov/",
-        # "https://www.dol.gov/",
-        # "https://www.opm.gov/",
-        # "https://www.cms.gov/",
-        # "https://www.bls.gov/",
-        # "https://www.fns.usda.gov/",
-        # "https://www.nutrition.gov",
-        # "https://www.hud.gov",
-        # "https://www.rd.usda.gov",
-        # "https://www.ssa.gov/",
-        # "https://www.va.gov/",
-        # "https://otda.ny.gov/",
-        # "https://www.benefits.va.gov",
-        # "https://www.va.gov/",
-    ]
 
     # Crawling the web and creating embeddings
     web_crawl_data = []
     for url in start_urls:
-        web_crawl_data.extend(crawl(url, max_depth=2))
+        web_crawl_data.extend(crawl(url, max_depth=4))
 
     if web_crawl_data:
         embeddings = create_vector_embedding(pc, web_crawl_data)
@@ -205,9 +174,34 @@ def main():
     else:
         print("No data crawled.")
 
-    query = "What kind of benefits veterans have from government?"
+    query = "What kind of benefits veterns, students, parents, citizen have from government?"
     results = get_matching_embedding(pc, query)
+    for match in results["matches"]:
+        print(match["metadata"]["text"])
 
+
+start_urls = [
+    # "https://www.usa.gov/benefit-finder",
+    # "https://benefits.va.gov/benefits/",
+    # "https://childcare.gov/",
+    # "https://studentaid.gov",
+    "https://www.grants.gov/",
+    # "https://www.cms.gov/",
+    # "https://www.healthcare.gov",
+    # "https://22007apply.gov/",
+    # "https://www.hud.gov",
+    # "https://home.treasury.gov/",
+    # "https://www.dhs.gov",
+    # "https://www.hhs.gov",
+    # "https://www.usa.gov",
+    # "https://www.dol.gov/",
+    # "https://www.opm.gov/",
+    # "https://www.bls.gov/",
+    # "https://www.fns.usda.gov/",
+    # "https://www.nutrition.gov",
+    # "https://www.rd.usda.gov",
+    # "https://www.ssa.gov/"
+]
 
 if __name__ == "__main__":
-    main()
+    web_crawler(start_urls)
