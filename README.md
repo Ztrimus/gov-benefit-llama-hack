@@ -2,7 +2,9 @@
 
 ### Team Members:
 
-Saurabh Zinjad, Shikha Verma, and Keval Shah
+-   Saurabh Zinjad(https://github.com/Ztrimus)
+-   Keval Shah (https://github.com/kevalshah14)
+-   Shikha Verma(https://github.com/sverma89asu)
 
 ---
 
@@ -67,6 +69,7 @@ The primary obstacles users face include:
 ## Architecture
 
 The Benefit Notification Tool operates through a series of integrated components:
+![Arch](./resources/Screenshot%202024-11-10%20at%204.39.03 PM.JPG)
 
 1. **Web Crawler**: Built with `SimpleWebPageReader`, the crawler gathers updated information from government websites, saving data in a vector database for quick retrieval.
 2. **Vector Database**: Uses Pinecone to store and query collected data, allowing for fast matching and retrieval of benefits.
@@ -93,6 +96,7 @@ The Benefit Notification Tool operates through a series of integrated components
 -   **Data Storage**: Pinecone (Vector Database)
 -   **Authentication**: Google OAuth 2.0
 -   **Additional Tools**: Llama Guard for bias prevention
+    ![Arch](./resources/Screenshot%202024-11-10%20at%204.53.47 PM.JPG)
 
 ---
 
