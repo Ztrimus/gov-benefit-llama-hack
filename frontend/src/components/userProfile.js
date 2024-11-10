@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import './UserProfile.css';
+import { useNavigate } from 'react-router-dom';
 
 const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
@@ -11,20 +12,29 @@ function UserProfile() {
     demographics: '',
     affiliated_organization: '',
     birthdate: '',
+    email: sessionStorage.getItem('user_email')
   });
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
         const response = await axios.post(
-          `${API_BASE_URL}/auth/check-profile`,{ email: sessionStorage.getItem('user_email') }, { withCredentials: true }
-      );
-        if (response.data.profileExists) {
-          setUserInfo(response.data.profile);
+          `${API_BASE_URL}/auth/check-profile`,
+          { email: sessionStorage.getItem('user_email') },
+          { withCredentials: true }
+        );
+        
+        // Only update userInfo if profile exists and response data includes the profile
+        if (response.data.profileExists && response.data.profile) {
+          setUserInfo((prevInfo) => ({
+            ...prevInfo,
+            ...response.data.profile
+          }));
         }
       } catch (err) {
         console.error('Error fetching user profile:', err);
@@ -48,7 +58,6 @@ function UserProfile() {
     setError(null);
     setSuccessMessage('');
 
-    // Example client-side validation
     if (!userInfo.occupation || !userInfo.birthdate) {
       setError('Occupation and Birthdate are required.');
       setSubmitting(false);
@@ -59,6 +68,7 @@ function UserProfile() {
       await axios.post(`${API_BASE_URL}/update-profile`, userInfo, { withCredentials: true });
       setSuccessMessage('Profile updated successfully.');
       console.log('User profile updated successfully');
+      navigate('/dashboard');
     } catch (err) {
       console.error('Error updating user profile:', err);
       setError('Failed to update profile.');

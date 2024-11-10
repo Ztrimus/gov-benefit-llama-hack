@@ -2,14 +2,14 @@ from fastapi import FastAPI, HTTPException, Depends, Request
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from starlette.middleware.sessions import SessionMiddleware
-from sqlalchemy import create_engine, Column, Integer, String, Date
+from sqlalchemy import create_engine, Column, Integer, String, Date, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker, Session
+from sqlalchemy.orm import sessionmaker, Session, relationship
 from typing import Optional
 import uuid
 import os
 from dotenv import load_dotenv
-from datetime import date
+from datetime import date, datetime
 
 # Import for Google OAuth verification
 from google.oauth2 import id_token
@@ -66,6 +66,8 @@ class Grant(Base):
     documents_needed = Column(String)
     steps_to_apply = Column(String)
     link = Column(String)
+    user_id = Column(Integer, ForeignKey('users.id'))  # Associate grants with a specific user
+    user = relationship("User")  # Define relationship with User
 
 class AppliedGrant(Base):
     __tablename__ = "applied_grants"
@@ -98,12 +100,23 @@ class UpdateGrantStatusRequest(BaseModel):
 class UserProfileRequest(BaseModel):
     occupation: Optional[str] = None
     income: Optional[str] = None
+    email: Optional[str] = None
     demographics: Optional[str] = None
     affiliated_organization: Optional[str] = None
-    birthdate: Optional[date] = None  # Changed to date
+    birthdate: Optional[str] = None  # Changed to date
 
 class CheckProfileResponse(BaseModel):
     profileExists: bool
+
+class CreateGrantRequest(BaseModel):
+    name: str
+    deadline: date
+    documents_needed: str
+    steps_to_apply: str
+    link: str
+
+class EmailRequest(BaseModel):
+    email: str
 
 # Authentication Endpoint
 @app.post("/auth")
@@ -138,7 +151,6 @@ async def auth(request: Request, db: Session = Depends(get_db)):
         return {"message": "Login successful", "user": {'email': user_email, 'name': user_name}}
     except ValueError as ve:
         print(f"Token verification failed: {ve}")  # Debugging line
-        # Invalid token
         raise HTTPException(status_code=401, detail="Invalid token")
     except Exception as e:
         print(f"Unexpected error during authentication: {e}")  # Debugging line
@@ -160,10 +172,10 @@ async def logout(request: Request):
     request.session.pop('user', None)
     return {"message": "Logged out successfully"}
 
-# Grants Endpoint
+# Grants Endpoint (for user-specific grants)
 @app.get("/grants")
 def get_grants(current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    grants = db.query(Grant).all()
+    grants = db.query(Grant).filter(Grant.user_id == current_user.id).all()
     return grants
 
 # Apply Grant Endpoint
@@ -203,14 +215,10 @@ def update_grant_status(request: UpdateGrantStatusRequest, current_user: User = 
     else:
         raise HTTPException(status_code=404, detail="Applied grant not found.")
 
-class EmailRequest(BaseModel):
-    email: str
-
 # Check Profile Endpoint
 @app.post("/auth/check-profile", response_model=CheckProfileResponse)
 def check_profile(request: EmailRequest, db: Session = Depends(get_db)):
     current_user = db.query(User).filter(User.email == request.email).first()
-    # Define what constitutes a complete profile
     required_fields = [
         current_user.occupation,
         current_user.income,
@@ -218,30 +226,48 @@ def check_profile(request: EmailRequest, db: Session = Depends(get_db)):
         current_user.affiliated_organization,
         current_user.birthdate,
     ]
-    # Check if all required fields are filled
     profile_exists = all(field is not None and field != "" for field in required_fields)
     return {"profileExists": profile_exists}
 
+# Create Grant Endpoint for Specific User
+@app.post("/create-grant")
+def create_grant(request: CreateGrantRequest, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
+    new_grant = Grant(
+        id=str(uuid.uuid4()),
+        name=request.name,
+        deadline=request.deadline,
+        documents_needed=request.documents_needed,
+        steps_to_apply=request.steps_to_apply,
+        link=request.link,
+        user_id=current_user.id  # Assign the grant to the current user
+    )
+    db.add(new_grant)
+    db.commit()
+    db.refresh(new_grant)
+    return {"message": "Grant created successfully.", "grant": new_grant}
+
 # Update User Profile Endpoint
 @app.post("/update-profile")
-def update_user_profile(request: UserProfileRequest, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)):
-    user = db.query(User).filter(User.id == current_user.id).first()
-    if user:
-        if request.occupation is not None:
-            user.occupation = request.occupation
-        if request.income is not None:
-            user.income = request.income
-        if request.demographics is not None:
-            user.demographics = request.demographics
-        if request.affiliated_organization is not None:
-            user.affiliated_organization = request.affiliated_organization
-        if request.birthdate is not None:
-            user.birthdate = request.birthdate
-        db.commit()
-        db.refresh(user)
-        return {"message": "Profile updated successfully.", "user": user}
-    else:
+def update_user_profile(request: UserProfileRequest, db: Session = Depends(get_db)):
+    user = db.query(User).filter(User.email == request.email).first()
+    if not user:
         raise HTTPException(status_code=404, detail="User not found.")
+    if request.occupation is not None:
+        user.occupation = request.occupation
+    if request.income is not None:
+        user.income = request.income
+    if request.demographics is not None:
+        user.demographics = request.demographics
+    if request.affiliated_organization is not None:
+        user.affiliated_organization = request.affiliated_organization
+    if request.birthdate is not None:
+        try:
+            user.birthdate = datetime.strptime(request.birthdate, "%Y-%m-%d").date()
+        except ValueError:
+            raise HTTPException(status_code=400, detail="Invalid birthdate format. Use YYYY-MM-DD.")
+    db.commit()
+    db.refresh(user)
+    return {"message": "Profile updated successfully.", "user": user}
 
 # Run the app
 if __name__ == "__main__":

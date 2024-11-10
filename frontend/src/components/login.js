@@ -47,7 +47,9 @@ function LoginPage() {
       sessionStorage.setItem('user_email', backendResponse.data.user.email);
 
       // After successful login, check profile status
-      const profileResponse = await axios.get(`${API_BASE_URL}/auth/check-profile`, { withCredentials: true });
+      const profileResponse = await axios.post(
+          `${API_BASE_URL}/auth/check-profile`,{ email: sessionStorage.getItem('user_email') }, { withCredentials: true }
+      );
 
       if (profileResponse.data.profileExists) {
         setIsAuthenticated(true);
