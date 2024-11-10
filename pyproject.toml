@@ -19,6 +19,8 @@ uvicorn = "^0.32.0"
 python-dotenv = "0.19"
 streamlit = "^1.40.0"
 requests = "^2.32.3"
+mindsdb-sdk = "^3.1.6"
+mailersend = "^0.5.8"
 
 [build-system]
 requires = ["poetry-core"]
