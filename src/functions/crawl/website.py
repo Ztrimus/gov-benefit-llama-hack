@@ -45,7 +45,7 @@ async def crawl_website():
         }
 
 
-        response = requests.post(url, json=data, headers=headers)
+        response = requests.put(url, json=data, headers=headers)
         response.raise_for_status()  # Raise an error for bad responses
 
 
