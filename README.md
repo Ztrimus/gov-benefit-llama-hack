@@ -28,6 +28,7 @@ The **Benefit Notification Tool** is an accessible platform designed to assist u
 
 - [Demo Video](https://youtu.be/jLphWh1i8cQ)
 - [Won 1st Prize of Llama Impact Hackathon](https://lablab.ai/event/llama-impact-hackathon/ragnarok/bridging-underprivileged-to-government-support)
+- [Code Repo](https://github.com/Ztrimus/gov-benefit-llama-hack)
 
 ---
 
