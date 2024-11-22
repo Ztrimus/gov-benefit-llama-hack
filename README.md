@@ -1,4 +1,4 @@
-# Benefit Notification Tool
+# Bridging Underprivileged to Government Support
 
 ### Team Members:
 
@@ -18,9 +18,7 @@
 6. [Features](#features)
 7. [Technology Stack](#technology-stack)
 8. [User Personas](#user-personas)
-9. [Prototype and Demo](#prototype-and-demo)
-10. [Future Work](#future-work)
-11. [Acknowledgments](#acknowledgments)
+9. [Future Work](#future-work)
 
 ---
 
@@ -28,7 +26,11 @@
 
 The **Benefit Notification Tool** is an accessible platform designed to assist underprivileged individuals in locating government benefits tailored to their unique profiles. By continuously monitoring government websites, the tool provides timely notifications and relevant benefit information via email, reducing the manual search burden on users.
 
+- [Demo Video](https://youtu.be/jLphWh1i8cQ)
+- [Won 1st Prize of Llama Impact Hackathon](https://lablab.ai/event/llama-impact-hackathon/ragnarok/bridging-underprivileged-to-government-support)
+
 ---
+
 
 ## Motivation
 
@@ -91,11 +93,12 @@ The Benefit Notification Tool operates through a series of integrated components
 
 ## Technology Stack
 
--   **Frontend**: React (with environment variable `REACT_APP_API_BASE_URL` for API requests)
--   **Backend**: FastAPI, REST API
--   **Data Storage**: Pinecone (Vector Database)
+-   **Frontend**: React, TailwindCSS, DaisyUI (with environment variable `REACT_APP_API_BASE_URL` for API requests)
+-   **Backend**: FastAPI, REST API, Python
+-   **Data Storage**: Pinecone (Vector Database), PostgreSQL
 -   **Authentication**: Google OAuth 2.0
--   **Additional Tools**: Llama Guard for bias prevention
+-   **Additional Tools**: LLama 3.1, Llama3.2, and Llama Guard for bias prevention
+-   **Automated Pipeline**: Restack, Github Actions
     ![Arch](./resources/Screenshot%202024-11-10%20at%204.53.47 PM.JPG)
 
 ---
@@ -104,22 +107,13 @@ The Benefit Notification Tool operates through a series of integrated components
 
 The primary users and beneficiaries include:
 
-1. Low-income individuals and families
-2. Elderly citizens
-3. People with disabilities
-4. Veterans
-5. Students
-6. Unemployed individuals
-7. Single parents
-
----
-
-## Prototype and Demo
-
-Our current prototype features:
-
--   **Functionality**: Data is gathered from government websites, stored, and matched to users' profiles to send notifications about relevant benefits.
--   **Demo**: [Link to Demo or Video](#) _(Link to be updated based on hackathon submission platform)_
+1. Single parents
+2. Students
+3. Elderly citizens
+4. People with disabilities
+5. Veterans
+6. Low-income individuals and families
+7. Unemployed individuals
 
 ---
 
@@ -130,13 +124,3 @@ We aim to expand the tool's capabilities, including:
 1. **Language Support Expansion**: Adding support for more popular languages in the U.S.
 2. **Subscription Model**: Allowing new websites to join and share benefits information on our platform.
 3. **Application Process Integration**: Assisting users through benefit application processes directly from our platform.
-
----
-
-## Acknowledgments
-
-Special thanks to **Philippe** for mentorship and guidance on prioritizing accessibility and direct user outreach, which helped refine the solution to be both simple and proactive.
-
----
-
-This structure covers your project from the initial concept to the technical architecture and future work, making it easy for others to understand and navigate. Feel free to adapt each section to add specific details or links as needed.
