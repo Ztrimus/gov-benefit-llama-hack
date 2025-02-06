@@ -26,12 +26,12 @@
 
 The **Benefit Notification Tool** is an accessible platform designed to assist underprivileged individuals in locating government benefits tailored to their unique profiles. By continuously monitoring government websites, the tool provides timely notifications and relevant benefit information via email, reducing the manual search burden on users.
 
-- [Demo Video](https://youtu.be/jLphWh1i8cQ)
-- [Won 1st Prize of Llama Impact Hackathon](https://lablab.ai/event/llama-impact-hackathon/ragnarok/bridging-underprivileged-to-government-support)
-- [Code Repo](https://github.com/Ztrimus/gov-benefit-llama-hack)
+-   [Demo Video](https://youtu.be/jLphWh1i8cQ)
+-   [Won 1st Prize of Llama Impact Hackathon](https://lablab.ai/event/llama-impact-hackathon/ragnarok/bridging-underprivileged-to-government-support)
+-   [Code Repo](https://github.com/Ztrimus/gov-benefit-llama-hack)
+-   [Website](https://github.com/Ztrimus/bridging-support-network)
 
 ---
-
 
 ## Motivation
 
